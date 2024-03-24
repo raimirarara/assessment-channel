@@ -11,7 +11,8 @@ export const authOptions: NextAuthOptions = {
 
       authorization: {
         params: {
-          scope: 'openid email profile https://www.googleapis.com/auth/youtube.readonly',
+          scope:
+            'openid email profile https://www.googleapis.com/auth/youtube.readonly https://www.googleapis.com/auth/yt-analytics.readonly https://www.googleapis.com/auth/yt-analytics-monetary.readonly https://www.googleapis.com/auth/youtube https://www.googleapis.com/auth/youtubepartner',
           // 必要に応じて他のスコープを追加
         },
       },
