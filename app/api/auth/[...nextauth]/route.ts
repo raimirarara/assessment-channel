@@ -1,4 +1,5 @@
-import NextAuth, { NextAuthOptions } from 'next-auth';
+import { GetServerSidePropsContext, NextApiRequest, NextApiResponse } from 'next';
+import NextAuth, { getServerSession, NextAuthOptions } from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 
 export const authOptions: NextAuthOptions = {
@@ -12,7 +13,7 @@ export const authOptions: NextAuthOptions = {
       authorization: {
         params: {
           scope:
-            'openid email profile https://www.googleapis.com/auth/youtube.readonly https://www.googleapis.com/auth/yt-analytics.readonly https://www.googleapis.com/auth/yt-analytics-monetary.readonly https://www.googleapis.com/auth/youtube https://www.googleapis.com/auth/youtubepartner',
+            'openid email profile https://www.googleapis.com/auth/youtube.readonly https://www.googleapis.com/auth/yt-analytics.readonly https://www.googleapis.com/auth/yt-analytics-monetary.readonly',
           // 必要に応じて他のスコープを追加
         },
       },
@@ -42,8 +43,12 @@ export const authOptions: NextAuthOptions = {
           ...session.user,
           role: token.role,
         },
+        token: token.accessToken,
       };
     },
+  },
+  pages: {
+    signIn: '/signin',
   },
 };
 

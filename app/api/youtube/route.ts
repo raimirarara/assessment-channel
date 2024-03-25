@@ -117,7 +117,7 @@ async function fetchAnalyticsData(token: JWT) {
       // チャンネルID (自分のチャンネルを指定する場合は'channel==MINE')
       endDate: '2024-12-31', // 終了日
       ids: 'channel==MINE', // 自分のチャンネルIDを指定
-      metrics: 'views', // 取得したいメトリック
+      metrics: 'views,estimatedMinutesWatched', // 取得したいメトリック
       startDate: '2024-01-01', // 開始日
     });
 
