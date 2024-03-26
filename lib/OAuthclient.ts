@@ -17,7 +17,6 @@ export const authOptions: NextAuthOptions = {
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID ?? '',
       clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? '',
-
       authorization: {
         params: {
           scope:
@@ -28,7 +27,18 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    jwt: async ({ token }) => {
+    jwt: async ({ token, user, account, profile }) => {
+      // 注意: トークンをログ出力してはダメです。
+      // console.log('in jwt', { user, token, account, profile });
+
+      if (user) {
+        token.user = user;
+        const u = user as any;
+        token.role = u.role;
+      }
+      if (account) {
+        token.accessToken = account.access_token;
+      }
       return token;
     },
     session: ({ session, token }) => {
