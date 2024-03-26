@@ -1,25 +1,45 @@
 import { RingProgress, Text, SimpleGrid, Paper, Center, Group, rem } from '@mantine/core';
 import { IconArrowUpRight, IconArrowDownRight } from '@tabler/icons-react';
+import { youtube_v3 } from 'googleapis';
 
 const icons = {
   up: IconArrowUpRight,
   down: IconArrowDownRight,
 };
 
-export function StatsRing({view}: {
-    view: number;
+export function StatsRing({
+  channelList,
+}: {
+  channelList: youtube_v3.Schema$Channel[] | null | undefined;
 }) {
-const data = [
-    { label: 'Page views', stats: view, progress: 65, color: 'teal', icon: 'up' },
-    { label: 'New users', stats: '2,550', progress: 72, color: 'blue', icon: 'up' },
+  const viewCount = Number(channelList?.[0]?.statistics?.viewCount);
+  const data = [
     {
-        label: 'Orders',
-        stats: '4,735',
-        progress: 52,
-        color: 'red',
-        icon: 'down',
+      label: '総再生数',
+      stats: viewCount.toLocaleString(),
+      progress: 65,
+      unit: '回',
+      color: 'teal',
+      icon: 'up',
     },
-    ] as const;
+    { label: '総再生時間', stats: '300', progress: 65, unit: '時間', color: 'teal', icon: 'up' },
+    {
+      label: '新規登録ユーザ',
+      stats: '2,550',
+      progress: 72,
+      unit: '人',
+      color: 'blue',
+      icon: 'up',
+    },
+    {
+      label: 'Orders',
+      stats: '4,735',
+      progress: 52,
+      unit: 'orders',
+      color: 'red',
+      icon: 'down',
+    },
+  ] as const;
 
   const stats = data.map((stat) => {
     const Icon = icons[stat.icon];
@@ -42,9 +62,11 @@ const data = [
             <Text c="dimmed" size="xs" tt="uppercase" fw={700}>
               {stat.label}
             </Text>
-            <Text fw={700} size="xl">
-              {stat.stats}
-            </Text>
+            <Center>
+              <Text fw={700} size="xl">
+                {stat.stats} {stat.unit}
+              </Text>
+            </Center>
           </div>
         </Group>
       </Paper>
