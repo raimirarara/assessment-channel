@@ -1,11 +1,6 @@
 'use client';
 
-import {
-  Text,
-  Paper,
-  Group,
-  PaperProps,
-} from '@mantine/core';
+import { Text, Paper, Group, PaperProps } from '@mantine/core';
 import { signIn } from 'next-auth/react';
 import { GoogleButton } from './GoogleButton';
 
@@ -17,9 +12,10 @@ export function AuthenticationForm(props: PaperProps) {
       </Text>
 
       <Group grow mb="md" mt="md">
-        <GoogleButton radius="xl" onClick={() => signIn('google')}>Google</GoogleButton>
+        <GoogleButton radius="xl" onClick={() => signIn()}>
+          Google
+        </GoogleButton>
       </Group>
-
     </Paper>
   );
 }
