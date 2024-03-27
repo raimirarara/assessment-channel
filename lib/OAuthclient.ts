@@ -27,6 +27,9 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
+    async redirect({ url, baseUrl }) {
+      return baseUrl;
+    },
     jwt: async ({ token, user, account, profile }) => {
       // 注意: トークンをログ出力してはダメです。
       // console.log('in jwt', { user, token, account, profile });
